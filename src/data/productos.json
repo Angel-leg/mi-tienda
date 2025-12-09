@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "nombre": "CAJA VOLCAN PEQUEÑO TIGRE BRAND",
+    "precio": 15,
+    "imagen": "/fotos/volcancitos.jpg",
+    "descripcion": "24 unidades por caja"
+  },
+  {
+    "id": 2,
+    "nombre": "CAJA DE PILICRACKER",
+    "precio": 15,
+    "imagen": "/fotos/tronadores.jpg",
+    "descripcion": "50 unidades por caja."
+  },
+
+  {
+    "id": 3,
+    "nombre": "CAJA DE TRONADORES",
+    "precio": 15,
+    "imagen": "/fotos/cebollitas.jpg",
+    "descripcion": "12 bolsitas por caja."
+  },
+    {
+    "id": 4,
+    "nombre": "CAJA DE MARIPOSAS",
+    "precio": 18,
+    "imagen": "/fotos/mariposas.jpg",
+    "descripcion": "12 mariposistas por caja."
+  },
+  {
+    "id": 5,
+    "nombre": "TROMPO CON PILICRACKER",
+    "precio": 9,
+    "imagen": "/fotos/tronadores_con_cracker.jpg",
+    "descripcion": "6 unidades por paquete."
+  },
+  {
+    "id": 6,
+    "nombre": "ESTRELLAS TIGRE BRAND",
+    "precio": 2.50,
+    "imagen": "/fotos/estrellitas.jpg",
+    "descripcion": "10 unidades por bolsita."
+  },
+  {
+    "id": 7,
+    "nombre": "GALLINITAS",
+    "precio": 3,
+    "imagen": "/fotos/gallinitas.jpg",
+    "descripcion": "1 unidad."
+  },
+  {
+    "id": 8,
+    "nombre": "CANDELA DE 20 TIROS",
+    "precio": 10,
+    "imagen": "/fotos/candela_20.jpg",
+    "descripcion": "1 unidad."
+  },
+  {
+    "id": 9,
+    "nombre": "CHILTEPITOS",
+    "precio": 10,
+    "imagen": "/fotos/chiltepitos.png",
+    "descripcion": "100 unidades por bolsita."
+  },
+  {
+    "id": 10,
+    "nombre": "CAJA DE MISIL 50 TIROS",
+    "precio": 30,
+    "imagen": "/fotos/misil_50.jpg",
+    "descripcion": "50 tiros."
+  },
+  {
+    "id": 11,
+    "nombre": "CAJA DE MISIL 120 TIROS",
+    "precio": 60,
+    "imagen": "/fotos/misil_120.jpg",
+    "descripcion": "120 tiros."
+  }
+]

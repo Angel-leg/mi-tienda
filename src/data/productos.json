@@ -23,10 +23,10 @@
   },
     {
     "id": 4,
-    "nombre": "CAJA DE MARIPOSAS",
-    "precio": 18,
+    "nombre": "MARIPOSAS",
+    "precio": 1.50,
     "imagen": "fotos/mariposas.jpg",
-    "descripcion": "12 mariposistas por caja."
+    "descripcion": "una unidad de mariposita."
   },
   {
     "id": 5,

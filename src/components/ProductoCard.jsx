@@ -1,102 +1,131 @@
 import { useContext, useState } from "react";
+import { Check, Plus, X, ZoomIn } from "lucide-react";
 import { CarritoContext } from "../context/CarritoContext";
 
 export default function ProductoCard({ producto }) {
-  const { agregarProducto } = useContext(CarritoContext);
-
+  const { carrito, agregarProducto } = useContext(CarritoContext);
   const [imagenGrande, setImagenGrande] = useState(false);
+  const [recienAgregado, setRecienAgregado] = useState(false);
+
+  const disponible = producto.disponible !== false;
+  const itemEnCarrito = carrito.find((item) => item.id === producto.id);
+  const cantidadEnCarrito = itemEnCarrito ? itemEnCarrito.cantidad : 0;
+
+  const manejarAgregar = () => {
+    if (!disponible) return;
+    agregarProducto(producto);
+    setRecienAgregado(true);
+    setTimeout(() => setRecienAgregado(false), 1100);
+  };
 
   return (
     <>
-      {/* ===== Tarjeta del producto ===== */}
-      <div style={styles.card}>
-        <img
-          src={producto.imagen}
-          alt={producto.nombre}
-          style={styles.img}
-          onClick={() => setImagenGrande(true)} // 👉 abrir imagen grande
-        />
-        <h3>{producto.nombre}</h3>
-        <p>{producto.descripcion}</p>
-        <strong>Q. {producto.precio} </strong>
-        <button style={styles.btn} onClick={() => agregarProducto(producto)}>
-          Agregar al carrito
-        </button>
-      </div>
+      <article className={`producto-card ${!disponible ? "agotado" : ""}`}>
+        {producto.etiqueta && disponible && (
+          <span className="badge-etiqueta">{producto.etiqueta}</span>
+        )}
+        {!disponible && <span className="badge-agotado">Agotado</span>}
 
-      {/* ===== Modal imagen grande ===== */}
+        {cantidadEnCarrito > 0 && (
+          <span className="badge-en-carrito">{cantidadEnCarrito} en carrito</span>
+        )}
+
+        <div
+          className="producto-img-wrap"
+          onClick={() => setImagenGrande(true)}
+          title="Clic para ampliar"
+        >
+          <img
+            src={producto.imagen}
+            alt={producto.nombre}
+            className="producto-img"
+            loading="lazy"
+          />
+          <span className="zoom-hint">
+            <ZoomIn size={15} />
+          </span>
+        </div>
+
+        <div className="producto-info">
+          {producto.categoria && (
+            <span className="producto-categoria">{producto.categoria}</span>
+          )}
+          <h3 className="producto-nombre">{producto.nombre}</h3>
+          <p className="producto-desc">{producto.descripcion}</p>
+        </div>
+
+        <div className="producto-footer">
+          <div className="producto-precio">
+            <span>Q.</span>
+            <strong>{Number(producto.precio).toFixed(2)}</strong>
+          </div>
+
+          <button
+            className={`btn-agregar ${recienAgregado ? "agregado" : ""}`}
+            onClick={manejarAgregar}
+            disabled={!disponible}
+          >
+            {!disponible ? (
+              "Agotado"
+            ) : recienAgregado ? (
+              <>
+                <Check size={16} /> Agregado
+              </>
+            ) : (
+              <>
+                <Plus size={16} /> Agregar
+              </>
+            )}
+          </button>
+        </div>
+      </article>
+
+      {/* Modal imagen ampliada */}
       {imagenGrande && (
-        <div style={styles.modalFondo} onClick={() => setImagenGrande(false)}>
-          <div style={styles.modalContenido}>
-            <img
-              src={producto.imagen}
-              alt="imagen grande"
-              style={styles.imgGrande}
-            />
+        <div
+          className="lightbox-fondo"
+          onClick={() => setImagenGrande(false)}
+        >
+          <div
+            className="lightbox-contenido"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="lightbox-cerrar"
+              onClick={() => setImagenGrande(false)}
+              aria-label="Cerrar imagen"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="lightbox-img-box">
+              <img src={producto.imagen} alt={producto.nombre} />
+            </div>
+
+            <div className="lightbox-pie">
+              <div>
+                <h4>{producto.nombre}</h4>
+                <p>{producto.descripcion}</p>
+              </div>
+              <div className="lightbox-acciones">
+                <strong className="lightbox-precio">
+                  Q. {Number(producto.precio).toFixed(2)}
+                </strong>
+                <button
+                  className="btn-agregar"
+                  disabled={!disponible}
+                  onClick={() => {
+                    manejarAgregar();
+                    setImagenGrande(false);
+                  }}
+                >
+                  <Plus size={16} /> Agregar
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
     </>
   );
 }
-
-const styles = {
-  card: {
-    width: "250px",
-    padding: "15px",
-    border: "1px solid #ddd",
-    borderRadius: "10px",
-    textAlign: "center",
-  },
-  img: {
-    width: "150px",
-    height: "150px",
-    objectFit: "contain",
-    borderRadius: "10px",
-    background: "#fff",
-    cursor: "pointer",
-    transition: "transform 0.2s",
-  },
-
-  // Fondo oscuro del modal
-modalFondo: {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100vw",
-  height: "100vh",
-  background: "rgba(0,0,0,0.8)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 99999,
-},
-
-modalContenido: {
-  background: "white",
-  borderRadius: "10px",
-  width: "80vw",        // ⬅ tamaño REAl del cuadro blanco
-  height: "80vh",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  overflow: "hidden",   // ⬅ Nunca dejar que se salga
-  padding: 0,
-},
-
-imgGrande: {
-  maxWidth: "100%",
-  maxHeight: "100%",
-  objectFit: "contain",
-},
-
-  btn: {
-    marginTop: "10px",
-    padding: "10px",
-    background: "#1e88e5",
-    color: "#fff",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-  },
-};
